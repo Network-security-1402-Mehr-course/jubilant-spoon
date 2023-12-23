@@ -1,15 +1,13 @@
-from itertools import repeat, zip_longest
+from collections.abc import Callable
+from itertools import zip_longest
+
+
+def bit(b: bytes, index: int):
+    return bool(b[index // 8] & 1 << index % 8)
 
 
 def count_ones(b: bytes) -> int:
-    ones = 0
-    for byte in b:
-        number = byte
-        while number:
-            if number % 2:
-                ones += 1
-            number //= 2
-    return ones
+    return sum(bit(b, i) for i in range(len(b) * 8))
 
 
 def toggle(b: bytes, bit_index: int) -> bytes:
